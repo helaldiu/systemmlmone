@@ -29,15 +29,18 @@ $hitratio = number_format(($myrefonly / 50) * 100, 2);
 
 $myewallet = floatval($mbrstr['ewallet']);
 
-var_dump($myewallet);
-die();
+// var_dump($myewallet);
+// die();
 
-if($myewallet > 0){
+// if($myewallet > 0){
 
-    var_dump($mbrstr['id']);
+//     var_dump($mbrstr['id']);
 
-    print($mbrstr['mpid']);
-}
+//     print($mbrstr['mpid']);
+// }
+
+
+
 
 // ---
 

@@ -8,14 +8,17 @@ if (verifylog_sess('admin') == '') {
 function addlevelcommissionforparentes($newmbrid){
 global $db;
 
-print("hello");
+//print("hello");
 
 $idmbr = $newmbrid;
 $condition = ' AND idmbr='.$idmbr;
 $mrow = $db->getAllRecords(DB_TBLPREFIX . '_mbrplans', 'idref as parent_id', $condition);
+
+var_dump($mrow);
+die();
 print $mrow[0]['parent_id']."-1st level parent\n";
 
-//die();
+die();
 
     if ($mrow[0]['parent_id'] > 0) {
                 $data = array(
@@ -28,6 +31,9 @@ print $mrow[0]['parent_id']."-1st level parent\n";
                     'txtoken' => "|REG:$newmbrplanid|",
                 );
                 $insert = $db->insert(DB_TBLPREFIX . '_transactions', $data);
+
+                var_dump($insert);
+                die();
                 $newtrxid = $db->lastInsertId();
                 $resultarr['txid'] = $newtrxid;
             }
