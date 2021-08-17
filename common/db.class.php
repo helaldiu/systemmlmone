@@ -137,7 +137,7 @@ class Database {
     public function getAllRecords($tableName, $fields = '*', $cond = '', $orderBy = '', $limit = '') {
         $sql= "SELECT $fields FROM $tableName WHERE 1 " . $cond . " " . $orderBy . " " . $limit;
 
-        print($sql);
+        //print($sql);
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute();
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);

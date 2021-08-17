@@ -14,11 +14,11 @@ $idmbr = $newmbrid;
 $condition = ' AND idmbr='.$idmbr;
 $mrow = $db->getAllRecords(DB_TBLPREFIX . '_mbrplans', 'idref as parent_id', $condition);
 
-var_dump($mrow);
-die();
+//print_r($mrow);
+//die();
 print $mrow[0]['parent_id']."-1st level parent\n";
 
-die();
+//die();
 
     if ($mrow[0]['parent_id'] > 0) {
                 $data = array(
@@ -32,8 +32,8 @@ die();
                 );
                 $insert = $db->insert(DB_TBLPREFIX . '_transactions', $data);
 
-                var_dump($insert);
-                die();
+                // var_dump($insert);
+                // die();
                 $newtrxid = $db->lastInsertId();
                 $resultarr['txid'] = $newtrxid;
             }
@@ -123,7 +123,7 @@ if (isset($FORM['dosubmit']) and $FORM['dosubmit'] == '1') {
 
         if ($newmbrid > 0) {
 
-            addlevelcommissionforparentes($newmbrid);
+            //addlevelcommissionforparentes($newmbrid);
 
             require_once('../common/mailer.do.php');
 
