@@ -3,6 +3,8 @@ if (!defined('OK_LOADME')) {
     die('o o p s !');
 }
 
+
+
 // test
 // $idmbr=67;
 // $condition = " AND idmbr = '{$idmbr}' ";
@@ -20,6 +22,9 @@ if (!defined('OK_LOADME')) {
 
 //end of test
 
+  // echo "Hello";
+  // print($mbrstr['id']);
+
 
 
 $condition = '';
@@ -30,15 +35,21 @@ $condition = '';
 $row = $db->getAllRecords(DB_TBLPREFIX . '_mbrplans', 'COUNT(*) as totref', $condition);
 $myreftotal = $row[0]['totref'];
 
-$condition = ' AND txtoid = "0" AND txstatus = "1" AND txtoken LIKE "%|REG:%" ';
+//$condition = ' AND txtoid = "0" AND txstatus = "1" AND txtoken LIKE "%|REG:%" ';
+if(!$mbrstr['id']){
+    $mbrstr['id']=0;
+}
+$condition = ' AND txtoid = '.$mbrstr['id'].' AND txstatus = "1" AND txtoken LIKE "%|REG:%" ';
 $row = $db->getAllRecords(DB_TBLPREFIX . '_transactions', 'SUM(txamount) as totincome', $condition);
 
 $myincometotal = floatval($row[0]['totincome']);
 
-// ---
+
+
 
 $condition = ' AND txtoid = "0" AND txfromid > "0" AND txstatus = "1" AND txtoken NOT LIKE "%|WIDR:%" ';
 $row = $db->getAllRecords(DB_TBLPREFIX . '_transactions', 'SUM(txamount) as totincome', $condition);
+
 $mytxintotal = floatval($row[0]['totincome']);
 
 $condition = ' AND txtoid > "0" AND txfromid = "0" AND txstatus = "1" AND txtoken NOT LIKE "%|WIDR:%" ';
@@ -295,7 +306,7 @@ if (count($userData) > 0) {
                     <div class="card-body">
                         <?php echo myvalidate($bpprow['currencysym']); ?>
                         </br>
-                        <?php echo $myincometotal?>
+                        <?php echo $myincometotal;?>
 
                         <!-- $bpprow['currencysym'].  -->
 
@@ -385,6 +396,12 @@ if (count($userData) > 0) {
             </div>
         </div>
     </div>
+
+
+    <?php
+        echo "Hello";
+        print($mbrstr['id']);
+    ?>
 
 </div>
 

@@ -3,6 +3,11 @@ if (!defined('OK_LOADME')) {
     die('o o p s !');
 }
 
+
+        echo "Hello";
+        print($mbrstr['id']);
+
+
 // create tx for manual renewal in advance
 if ($FORM['renewHash'] == md5($mbrstr['mpid'] . $mbrstr['reg_expd']) && $FORM['renewId'] == $mbrstr['mpid'] && $FORM['redir']) {
     $utctime = date('Y-m-d H:i:s', time() + (3600 * $cfgrow['time_offset']));

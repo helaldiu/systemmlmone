@@ -646,6 +646,32 @@ function dolvldone($mbrstr, $trxstr, $mppid = 1) {
 
 //end of test
 
+function addlevelcommsion($reg_utctime, $newmbrid, $refstr,$mppid){
+    global $db, $cfgrow, $bpprow, $LANG;
+
+       $idref = $refstr['mpid']; 
+
+       if ($idref > 0) {
+                    $newmember_id = $newmbrid;
+                    $data = array(
+                        'txdatetm' => $reg_utctime,
+                        'txfromid' => $newmember_id,
+                        'txamount' => 100,
+                        'txtoid'   => $idref,
+                        'txmemo' => '1st parent level commission',
+                        'txppid' => $mppid,
+                        'txtoken' => "|REG:$newmbrplanid|",
+                    );
+                $insert = $db->insert(DB_TBLPREFIX . '_transactions', $data);
+            }
+
+
+}
+
+//addlevelcommsion($idmbr,$reg_utctime,$newmember_id,$idref,$mppid);
+
+
+
 
 function regmbrplans($mbrstr = array(), $refmpid = 0, $ppid = 1) {
     global $db, $cfgrow, $bpprow, $LANG;
@@ -722,77 +748,80 @@ function regmbrplans($mbrstr = array(), $refmpid = 0, $ppid = 1) {
                 $resultarr['txid'] = $newtrxid;
             }
 
+
+
             // Paraent level commision
 
         //1st parent is $idref
-          if ($idref > 0) {
-                    $newmember_id = $idmbr;
-                    $data = array(
-                        'txdatetm' => $reg_utctime,
-                        'txfromid' => $newmember_id,
-                        'txamount' => 150,
-                        'txtoid'   => $idref,
-                        'txmemo' => '1st parent level commission',
-                        'txppid' => $mppid,
-                        'txtoken' => "|REG:$newmbrplanid|",
-                    );
-                    $insert = $db->insert(DB_TBLPREFIX . '_transactions', $data);
+          // if ($idref > 0) {
+          //           $newmember_id = $idmbr;
+          //           $data = array(
+          //               'txdatetm' => $reg_utctime,
+          //               'txfromid' => $newmember_id,
+          //               'txamount' => 0,
+          //               'txtoid'   => $idref,
+          //               'txmemo' => '1st parent level commission',
+          //               'txppid' => $mppid,
+          //               'txtoken' => "|REG:$newmbrplanid|",
+          //           );
+          //       $insert = $db->insert(DB_TBLPREFIX . '_transactions', $data);
+          //   }
+                
                    //end of 1st parent
-
                    //start of 2nd parent level
-                    
+
 
                    //2nd level parent
-                        $idmbr = $idref;
-                        $condition = ' AND idmbr='.$idmbr;
-                        $mrow = $db->getAllRecords(DB_TBLPREFIX . '_mbrplans', 'idref as parent_id', $condition);
-                        print $mrow[0]['parent_id']."-2nd level upper parent\n";
+                    // $idmbr = $idref;
+                    // $condition = ' AND idmbr='.$idmbr;
+                    // $mrow = $db->getAllRecords(DB_TBLPREFIX . '_mbrplans', 'idref as parent_id', $condition);
+                    //     //print $mrow[0]['parent_id']."-2nd level upper parent\n";
 
-                        $idref = $mrow[0]['parent_id'];
-                        //insert 2nd level parent commision
-                        if($idref) {
-                                $data = array(
-                                    'txdatetm' => $reg_utctime,
-                                    'txfromid' =>$newmember_id,
-                                    'txamount' => 100,
-                                    'txtoid'   => $idref,
-                                    'txmemo' => '2nd parent level commission',
-                                    'txppid' => $mppid,
-                                    'txtoken' => "|REG:$newmbrplanid|",
-                                );
-                                $insert = $db->insert(DB_TBLPREFIX . '_transactions', $data);
-                        } 
+                    //     $idref = $mrow[0]['parent_id'];
+                    //     //insert 2nd level parent commision
+                    //     if($idref) {
+                    //             $data = array(
+                    //                 'txdatetm' => $reg_utctime,
+                    //                 'txfromid' =>$newmember_id,
+                    //                 'txamount' => 100,
+                    //                 'txtoid'   => $idref,
+                    //                 'txmemo' => '2nd parent level commission',
+                    //                 'txppid' => $mppid,
+                    //                 'txtoken' => "|REG:$newmbrplanid|",
+                    //             );
+                    //             $insert = $db->insert(DB_TBLPREFIX . '_transactions', $data);
+                    //     } 
 
                    //end of 2nd parent level
 
                  //3rd lavel commision
-                        $idmbr = $idref;
-                        $condition = ' AND idmbr='.$idmbr;
-                        $mrow = $db->getAllRecords(DB_TBLPREFIX . '_mbrplans', 'idref as parent_id', $condition);
+                        // $idmbr = $idref;
+                        // $condition = ' AND idmbr='.$idmbr;
+                        // $mrow = $db->getAllRecords(DB_TBLPREFIX . '_mbrplans', 'idref as parent_id', $condition);
 
-                        //print $mrow[0]['parent_id']."-2nd level upper parent\n";
+                        // //print $mrow[0]['parent_id']."-2nd level upper parent\n";
 
-                        $idref = $mrow[0]['parent_id'];
-                        if($idref) {
-                                $data = array(
-                                    'txdatetm' => $reg_utctime,
-                                    'txfromid' =>$newmember_id,
-                                    'txamount' => 75,
-                                    'txtoid'   => $idref,
-                                    'txmemo' => '3rd parent level commission',
-                                    'txppid' => $mppid,
-                                    'txtoken' => "|REG:$newmbrplanid|",
-                                );
-                                $insert = $db->insert(DB_TBLPREFIX . '_transactions', $data);
-                        } 
+                        // $idref = $mrow[0]['parent_id'];
+                        // if($idref) {
+                        //         $data = array(
+                        //             'txdatetm' => $reg_utctime,
+                        //             'txfromid' =>$newmember_id,
+                        //             'txamount' => 75,
+                        //             'txtoid'   => $idref,
+                        //             'txmemo' => '3rd parent level commission',
+                        //             'txppid' => $mppid,
+                        //             'txtoken' => "|REG:$newmbrplanid|",
+                        //         );
+                        //         $insert = $db->insert(DB_TBLPREFIX . '_transactions', $data);
+                        // } 
 
 
                 //End 3rd level comssion
 
                 //4th level commision
+         /*       if($idref){
 
-                      //3rd lavel commision
-                        $idmbr = $idref;
+                    $idmbr = $idref;
                         $condition = ' AND idmbr='.$idmbr;
                         $mrow = $db->getAllRecords(DB_TBLPREFIX . '_mbrplans', 'idref as parent_id', $condition);
                         
@@ -811,35 +840,40 @@ function regmbrplans($mbrstr = array(), $refmpid = 0, $ppid = 1) {
                                 );
                                 $insert = $db->insert(DB_TBLPREFIX . '_transactions', $data);
                         } 
+                    }*/
 
 
 
                 // End 4th level commssio
 
                 // 5th Level commssion
-                        $idmbr = $idref;
-                        $condition = ' AND idmbr='.$idmbr;
-                        $mrow = $db->getAllRecords(DB_TBLPREFIX . '_mbrplans', 'idref as parent_id', $condition);
+                // if($idref){
+
+                //         $idmbr = $idref;
+                //         $condition = ' AND idmbr='.$idmbr;
+                //         $mrow = $db->getAllRecords(DB_TBLPREFIX . '_mbrplans', 'idref as parent_id', $condition);
                         
-                        //print $mrow[0]['parent_id']."-2nd level upper parent\n";
+                //         //print $mrow[0]['parent_id']."-2nd level upper parent\n";
 
-                        $idref = $mrow[0]['parent_id'];
-                        if($idref) {
-                                $data = array(
-                                    'txdatetm' => $reg_utctime,
-                                    'txfromid' =>$newmember_id,
-                                    'txamount' => 30,
-                                    'txtoid'   => $idref,
-                                    'txmemo' => '5th parent level commission',
-                                    'txppid' => $mppid,
-                                    'txtoken' => "|REG:$newmbrplanid|",
-                                );
-                                $insert = $db->insert(DB_TBLPREFIX . '_transactions', $data);
-                        } 
+                //         $idref = $mrow[0]['parent_id'];
 
+                //         if($idref) {
+                //                 $data = array(
+                //                     'txdatetm' => $reg_utctime,
+                //                     'txfromid' =>$newmember_id,
+                //                     'txamount' => 30,
+                //                     'txtoid'   => $idref,
+                //                     'txmemo' => '5th parent level commission',
+                //                     'txppid' => $mppid,
+                //                     'txtoken' => "|REG:$newmbrplanid|",
+                //                 );
+                //                 $insert = $db->insert(DB_TBLPREFIX . '_transactions', $data);
+                //         } 
+
+                //     }
                 // End 5th Level commssion
 
-             }
+            
 
             // End Paraent level commision
 

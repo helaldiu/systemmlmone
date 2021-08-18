@@ -153,6 +153,10 @@ if (isset($FORM['dosubmit']) and $FORM['dosubmit'] == '1') {
 
 
             regmbrplans($mbrstr, $refstr['mpid'], $bpprow['ppid']);
+
+            //$reg_utctime = date('Y-m-d H:i:s', time() + (3600 * $cfgrow['time_offset']));
+
+            //addlevelcommsion($reg_utctime, $newmbrid, $refstr['mpid'],$mppid);
         }
 
         if ($insert) {
